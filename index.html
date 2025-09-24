@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <title>HN-Lang: Hindi Inspired Programming</title>
+  <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <a href="https://bhashabytes.github.io/" class="site-logo" aria-label="BhashaBytes Home">
+    <img src="logo.png" alt="BhashaBytes Logo" />
+  </a>
+  <h1>HN-Lang: Hindi-Inspired Programming</h1>
+
+  <div class="intro-card">
+    <p>
+      Welcome to <strong>HN-Lang</strong> – a programming language designed especially for Hindi speakers!
+      HN-Lang makes coding more intuitive by using Hindi words and their transliterations as keywords,
+      instead of English-based Python syntax. It’s beginner-friendly and runs fully on Python via a translation layer.
+    </p>
+    <p>
+      Write code below, run it instantly, and explore HN-Lang’s features with live examples. Learning programming
+      has never been this friendly!
+    </p>
+  </div>
+
+  <div class="container">
+    <textarea id="hindiCode" rows="10" placeholder="Type your Hindi code here...">छापो("Hello HN-Lang!")</textarea>
+    <br>
+    <button onclick="runCode()">Run Code</button>
+    <pre id="output">Output will appear here...</pre>
+  </div>
+
+  <h2>Documentation & Examples</h2>
+  <div class="docs">
+    <h3>Print (छापो / chhapo)</h3>
+    <pre>छापो("Hello World")</pre>
+
+    <h3>Functions (दे / de)</h3>
+    <pre>दे जोड़(a, b):
+    वापसी a + b
+छापो("परिणाम =", जोड़(5, 3))</pre>
+
+    <h3>Input (लो / lo)</h3>
+    <pre>a = int(लो("संख्या1:"))
+b = int(लो("संख्या2:"))
+छापो("योग =", a + b)</pre>
+
+    <h3>Conditionals</h3>
+    <pre>i = 5
+अगर i > 3:
+    छापो("i बड़ा है")
+अन्यथा अगर i == 3:
+    छापो("i बराबर है")
+अन्यथा:
+    छापो("i छोटा है")</pre>
+
+    <h3>Loops</h3>
+    <pre>केलिए x in [1,2,3]:
+    छापो("x =", x)
+
+i = 0
+जबतक i < 3:
+    छापो("i =", i)
+    i += 1</pre>
+
+    <h3>Loop Control</h3>
+    <pre>केलिए x in [1,2,3]:
+    अगर x == 2:
+        छापो("दो मिला")
+        तोड़ो
+    अन्यथा:
+        छापो(x)</pre>
+
+    <h3>Booleans & None</h3>
+    <pre>अगर सही:
+    छापो("true")
+अन्यथा अगर गलत:
+    छापो("false")
+छापो("मान नहीं =", कुछ नहीं)</pre>
+
+    <h3>Exceptions</h3>
+    <pre>कोशिश:
+    1 / 0
+सिवाय ZeroDivisionError:
+    छापो("शून्य से भाग नहीं कर सकते")
+आखिरकार:
+    छापो("यह हमेशा चलेगा")</pre>
+
+    <h3>Imports</h3>
+    <pre>लाओ math जैसा m
+छापो(m.sqrt(4))</pre>
+
+    <p>Modify examples above and run your own HN-Lang code above!</p>
+  </div>
+
+  <h2>HN-Lang Keywords</h2>
+  <div class="reference-box">
+    <table>
+      <thead>
+        <tr>
+          <th>Python</th>
+          <th>Hindi Script</th>
+          <th>Transliteration</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>print</td><td>छापो</td><td>chhapo</td></tr>
+        <tr><td>input</td><td>लो</td><td>lo</td></tr>
+        <tr><td>if</td><td>अगर</td><td>agar</td></tr>
+        <tr><td>elif</td><td>अन्यथा अगर</td><td>anyathaagar</td></tr>
+        <tr><td>else</td><td>अन्यथा</td><td>anyatha</td></tr>
+        <tr><td>for</td><td>केलिए</td><td>kelie</td></tr>
+        <tr><td>while</td><td>जबतक</td><td>jabtak</td></tr>
+        <tr><td>def</td><td>दे</td><td>de</td></tr>
+        <tr><td>class</td><td>वर्ग</td><td>varg</td></tr>
+        <tr><td>return</td><td>वापसी</td><td>vaapsi</td></tr>
+        <tr><td>break</td><td>तोड़ो</td><td>todo</td></tr>
+        <tr><td>continue</td><td>जारी</td><td>jaari</td></tr>
+        <tr><td>import</td><td>लाओ</td><td>lao</td></tr>
+        <tr><td>from</td><td>से</td><td>se</td></tr>
+        <tr><td>as</td><td>जैसा</td><td>jaisa</td></tr>
+        <tr><td>with</td><td>साथ</td><td>saath</td></tr>
+        <tr><td>try</td><td>कोशिश</td><td>koshish</td></tr>
+        <tr><td>except</td><td>सिवाय</td><td>sivay</td></tr>
+        <tr><td>finally</td><td>आखिरकार</td><td>aakhirkar</td></tr>
+        <tr><td>True</td><td>सही</td><td>sahi</td></tr>
+        <tr><td>False</td><td>गलत</td><td>galat</td></tr>
+        <tr><td>None</td><td>कुछ नहीं</td><td>kuchnahin</td></tr>
+        <tr><td>or</td><td>या</td><td>ya</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    let pyodideReady = false;
+    let pyodide;
+
+    async function loadPyodideAndPackages() {
+      pyodide = await loadPyodide();
+
+      // redirect print → <pre>
+      pyodide.runPython(`
+import sys
+from js import document, prompt
+
+class OutputCatcher:
+    def write(self, s):
+        if s.strip():
+            document.getElementById("output").textContent += s + "\\n"
+    def flush(self): pass
+
+sys.stdout = OutputCatcher()
+sys.stderr = OutputCatcher()
+
+# redefine input
+def input(msg=""):
+    resp = prompt(str(msg))
+    return "" if resp is None else str(resp)
+`);
+      pyodideReady = true;
+    }
+    loadPyodideAndPackages();
+
+    const mapping = {
+      "छापो": "print", "chhapo": "print",
+      "लो": "input", "lo": "input",
+      "अगर": "if", "agar": "if",
+      "अन्यथा अगर": "elif", "anyathaagar": "elif",
+      "अन्यथा": "else", "anyatha": "else",
+      "केलिए": "for", "kelie": "for",
+      "जबतक": "while", "jabtak": "while",
+      "दे": "def", "de": "def",
+      "वर्ग": "class", "varg": "class",
+      "वापसी": "return", "vaapsi": "return",
+      "तोड़ो": "break", "todo": "break",
+      "जारी": "continue", "jaari": "continue",
+      "लाओ": "import", "lao": "import",
+      "से": "from", "se": "from",
+      "जैसा": "as", "jaisa": "as",
+      "साथ": "with", "saath": "with",
+      "कोशिश": "try", "koshish": "try",
+      "सिवाय": "except", "sivay": "except",
+      "आखिरकार": "finally", "aakhirkar": "finally",
+      "सही": "True", "sahi": "True",
+      "गलत": "False", "galat": "False",
+      "कुछ नहीं": "None", "kuchnahin": "None",
+      "या": "or", "ya": "or"
+    };
+
+    function escapeRegExp(str) {
+      return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+
+    function translate(code) {
+      for (let key in mapping) {
+        const re = new RegExp(`(?<!\\w)${escapeRegExp(key)}(?!\\w)`, 'gu');
+        code = code.replace(re, mapping[key]);
+      }
+      return code;
+    }
+
+    async function runCode() {
+      if (!pyodideReady) {
+        alert("Pyodide is still loading...");
+        return;
+      }
+      document.getElementById("output").textContent = "";
+      const rawCode = document.getElementById("hindiCode").value;
+      const pyCode = translate(rawCode);
+
+      try {
+        await pyodide.runPythonAsync(pyCode);
+      } catch (err) {
+        document.getElementById("output").textContent += "Error: " + err + "\n";
+      }
+    }
+  </script>
+</body>
+</html>
